@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* Three equal columns */
+            grid-template-rows: 50px auto 200px 50px; /* Limit row heights */
+            grid-gap: 10px; /* Space between items */
+            text-align: center;
+            background: linear-gradient(#ADD8E6, #E6F7FF);
+            min-height: 100%; /* Min height 100% of the viewport */
+            row-gap: 200px;
+        }
+
+        .title {
+            font-weight: bold;
+            font-family: Arial,sans-serif;
+            grid-column: 1 / span 3;
+            color: darkslateblue;
+            
+        }
+
+        .grid-input-section {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* Three equal columns */
+            grid-template-rows: auto; /* Let rows auto-adjust based on content */
+            text-align: center;
+            background-color: whitesmoke;
+            grid-column: 2;
+            border-radius: 3%;
+        }
+
+        .input-box {
+            grid-column: 1 / span 3;
+            margin:10px;
+            height:50px;
+            font-size:large
+        }
+
+        .input-box-date {
+            grid-column: 3;
+            margin: 10px;
+            font-size: large;
+            height:50px;
+            font-size:large;
+            margin-right:120px;
+        }
+
+        .data-label {
+            margin-top: 25px;
+            grid-column: 1 / span 2;
+            font-size:larger
+        }
+
+        .submit-button {
+            grid-column: 1 / span 3;
+            margin: 30px;
+            height: 50px;
+            background-color: darkslateblue;
+            color:aliceblue
+        }
+        
+        
+    </style>
+</head>
+<body>
+    <div class="grid-container">
+
+        <h1 class="title">Credit Card Control Center </h1>
+
+        <div class="grid-input-section">
+
+            <h1 class="title">sign up</h1>
+            <input type="text" class="input-box" id="Email" placeholder="Email">
+            <input type="password" class="input-box" id="Password" placeholder="Password">
+            <label for="birthdate" class="data-label">Enter your birth date:</label>
+            <input type="date" class="input-box-date" id="BirthDate" >
+            <input type="text" class="input-box" id="CreditCardNumber" placeholder="Credit Card Number">
+            <input type="text" class="input-box" id="expiration date" placeholder="expiration date mm/yy">
+            <input type="button" class="submit-button" id="submit-button" value="Submit">
+            <a href="htmlpage.html">press</a>
+            
+        </div>
+    </div>
+    <script>
+        function CheckSubmission() {
+            // Access the email element and check the format
+            const email = document.getElementById("Email").value;
+            const emailPattern = /^[a-zA-Z]+@[a-zA-Z]+\.[a-zA-Z]+$/; // Email format check
+            if (!email.match(emailPattern)) {
+                alert("Please enter a valid email.");
+                return;
+            }
+
+            // Access the password element and check the conditions
+            let password = document.getElementById("Password").value;
+            const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&()])[A-Za-z\d!@#$%^&()]{8}$/; // Password pattern check
+            if (!password.match(passwordPattern)) {
+                alert("Password must be at least 8 characters long, contain at least one lowercase letter, one uppercase letter, one number, and one special character.");
+                return;
+            }
+
+            // Access the birthdate and check if the user is older than 16 years old
+            const birthDate = document.getElementById("BirthDate").value;
+            const birthDateObj = new Date(birthDate);
+            const today = new Date();
+            let age = today.getFullYear() - birthDateObj.getFullYear();
+            const m = today.getMonth() - birthDateObj.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < birthDateObj.getDate())) {
+                age--;
+            }
+            if (age < 16) {
+                alert("You must be at least 16 years old.");
+                return;
+            }
+
+            // Access the credit card number and check if it matches the format
+            const creditCardNumber = document.getElementById("CreditCardNumber").value;
+            const creditCardPattern = /^\d{4}(\d{4}){3}$/; // 4 groups of 4 digits
+            if (!creditCardNumber.match(creditCardPattern)) {
+                alert("Credit card number must be exactly 16 digits in groups of 4.");
+                return;
+            }
+
+            //add section to format and check expiration date
+
+            // If all checks pass
+            alert("Form submitted successfully!");
+        }
+
+        let submitButton = document.getElementById("submit-button");
+        submitButton.addEventListener("click", CheckSubmission)
+    </script>
+</body>
+</html>
