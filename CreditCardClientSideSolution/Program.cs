@@ -1,25 +1,25 @@
 namespace CreditCardClientSideSolution
 {
-	public class Program
-	{
-		public static void Main(string[] args)
-		{
-			var builder = WebApplication.CreateBuilder(args);
-			var app = builder.Build();
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            var builder = WebApplication.CreateBuilder(args);
+            var app = builder.Build();
 
-			app.UseStaticFiles();
+            // Serve static files from wwwroot
+            app.UseStaticFiles();
 
-			app.MapGet("/", async context =>
-			{
-				context.Response.ContentType = "text/html";
-				await context.Response.SendFileAsync("sign-up.html");
-				
-				
-			});
+            // Map the root route to serve the sign-up.html file from wwwroot folder
+            app.MapGet("/", async context =>
+            {
+                context.Response.ContentType = "text/html";
+                // Corrected path to the wwwroot folder
+                await context.Response.SendFileAsync("wwwroot/RegistrationPage.html");
+            });
 
-			
-
-			app.Run();
-		}
-	}
+            // Run the application
+            app.Run();
+        }
+    }
 }
